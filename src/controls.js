@@ -3,8 +3,24 @@
  * mortgage calculator, localStorage persistence, and the "fit affordable" button.
  */
 
-const STORAGE_KEY = 'mcr-heatmap-prefs'
+export const STORAGE_KEY = 'mcr-heatmap-prefs'
 const DEBOUNCE_MS = 50
+
+/**
+ * Pure mortgage payment calculator.
+ * @param {number} loan       — loan amount in £
+ * @param {number} annRate    — annual interest rate as a percentage (e.g. 4.5)
+ * @param {number} termYears  — mortgage term in years
+ * @returns {number} monthly payment in £
+ */
+export function calcMortgagePayment(loan, annRate, termYears) {
+  if (loan <= 0) return 0
+  const monthlyRate = annRate / 100 / 12
+  const n = termYears * 12
+  if (monthlyRate <= 0) return loan / n
+  return (loan * monthlyRate * Math.pow(1 + monthlyRate, n)) /
+         (Math.pow(1 + monthlyRate, n) - 1)
+}
 
 export function loadPrefs() {
   try {
@@ -102,23 +118,9 @@ export function initControls(onChange, onFitAffordable) {
     const term    = parseInt(termInput.value, 10) || 25
     const annRate = parseFloat(rateInput.value) || 4.5
 
-    const monthlyRate = annRate / 100 / 12
-    const n = term * 12
-
-    // Max affordable loan for a monthly payment heuristic (income ~4.5x salary)
-    // Instead, show: for a given total purchase price = deposit + loan
-    // We'll compute max purchase by solving for loan where monthly payment
-    // is a "typical" affordability ceiling — but without income data we can't.
-    // More useful: just compute monthly payment for the current budget - deposit.
     const loan = Math.max(0, budget - deposit)
 
-    let monthly = 0
-    if (monthlyRate > 0 && loan > 0) {
-      monthly = (loan * monthlyRate * Math.pow(1 + monthlyRate, n)) /
-                (Math.pow(1 + monthlyRate, n) - 1)
-    } else if (loan > 0) {
-      monthly = loan / n
-    }
+    const monthly = calcMortgagePayment(loan, annRate, term)
 
     maxPurchaseEl.textContent = fmt.format(budget)
     monthlyEl.textContent = fmt.format(Math.round(monthly))
