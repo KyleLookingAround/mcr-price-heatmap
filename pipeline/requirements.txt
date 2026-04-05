@@ -2,6 +2,7 @@ pandas>=2.0
 requests>=2.31
 tqdm>=4.66
 numpy>=1.26
+pytest>=8.0
 # For boundary simplification (optional — see fetch_boundaries.py)
 # geopandas>=0.14
 # shapely>=2.0

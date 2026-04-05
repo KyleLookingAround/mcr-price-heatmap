@@ -49,7 +49,7 @@ export function loadData(prices, geojson) {
   }).addTo(mapInstance)
 }
 
-function getDistrict(feature) {
+export function getDistrict(feature) {
   // ONS GeoJSON uses 'postcodes' or 'name' — normalise
   return (
     feature.properties.name ||
