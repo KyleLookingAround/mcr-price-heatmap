@@ -1,0 +1,374 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --green: #22c55e;
+  --green-fill: rgba(34, 197, 94, 0.45);
+  --amber: #f59e0b;
+  --amber-fill: rgba(245, 158, 11, 0.45);
+  --red: #ef4444;
+  --red-fill: rgba(239, 68, 68, 0.45);
+  --grey: #6b7280;
+  --grey-fill: rgba(107, 114, 128, 0.25);
+  --sidebar-bg: #1e1e2e;
+  --sidebar-text: #e2e8f0;
+  --sidebar-muted: #94a3b8;
+  --sidebar-border: #334155;
+  --sidebar-width: 300px;
+  --accent: #6366f1;
+}
+
+html, body, #app {
+  height: 100%;
+  width: 100%;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+}
+
+#app {
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── Sidebar ─────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  border-right: 1px solid var(--sidebar-border);
+  z-index: 1000;
+}
+
+#sidebar-header {
+  padding: 20px 16px 12px;
+  border-bottom: 1px solid var(--sidebar-border);
+}
+
+#sidebar-header h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.subtitle {
+  color: var(--sidebar-muted);
+  font-size: 12px;
+}
+
+.control-group {
+  padding: 16px;
+  border-bottom: 1px solid var(--sidebar-border);
+}
+
+.control-group > label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sidebar-muted);
+  margin-bottom: 10px;
+}
+
+/* Budget input */
+.budget-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.pound {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--sidebar-muted);
+}
+
+#budget-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--accent);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  outline: none;
+  width: 100%;
+  padding: 2px 0;
+}
+
+#budget-input::-webkit-inner-spin-button,
+#budget-input::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.budget-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--sidebar-muted);
+  margin-top: 4px;
+}
+
+/* Property type toggle */
+#prop-type-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.type-btn {
+  background: var(--sidebar-border);
+  border: 1px solid transparent;
+  color: var(--sidebar-text);
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.type-btn:hover {
+  background: #475569;
+}
+
+.type-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Legend */
+.legend {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--sidebar-muted);
+}
+
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.swatch.green  { background: var(--green-fill); border: 1.5px solid var(--green); }
+.swatch.amber  { background: var(--amber-fill); border: 1.5px solid var(--amber); }
+.swatch.red    { background: var(--red-fill);   border: 1.5px solid var(--red); }
+.swatch.grey   { background: var(--grey-fill);  border: 1.5px solid var(--grey); }
+
+/* Action buttons */
+.action-btn {
+  width: 100%;
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  padding: 9px 0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.action-btn:hover {
+  opacity: 0.85;
+}
+
+/* Mortgage calculator */
+.mortgage-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.mortgage-row label {
+  font-size: 12px;
+  color: var(--sidebar-muted);
+}
+
+.mortgage-row input {
+  width: 90px;
+  background: var(--sidebar-border);
+  border: 1px solid #475569;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 13px;
+  padding: 4px 6px;
+  text-align: right;
+  outline: none;
+}
+
+.mortgage-row input:focus {
+  border-color: var(--accent);
+}
+
+#mortgage-result {
+  margin-top: 10px;
+  background: #0f172a;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--sidebar-text);
+  line-height: 1.6;
+}
+
+#mortgage-result .mortgage-budget {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+#sidebar-footer {
+  margin-top: auto;
+  padding: 12px 16px;
+  font-size: 11px;
+  color: var(--sidebar-muted);
+  border-top: 1px solid var(--sidebar-border);
+  line-height: 1.7;
+}
+
+/* ── Map ─────────────────────────────────────────── */
+#map {
+  flex: 1;
+  height: 100%;
+  background: #0f172a;
+}
+
+/* ── Leaflet popup overrides ─────────────────────── */
+.leaflet-popup-content-wrapper {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  padding: 0;
+}
+
+.leaflet-popup-tip {
+  background: #1e293b;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  width: auto !important;
+}
+
+.popup-inner {
+  padding: 14px 16px;
+  min-width: 200px;
+}
+
+.popup-inner h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.popup-inner .popup-label {
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.popup-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.popup-stat strong {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.popup-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 13px;
+}
+
+.popup-trend.up   { color: var(--green); }
+.popup-trend.down { color: var(--red); }
+.popup-trend.flat { color: var(--sidebar-muted); }
+
+.popup-sparkline {
+  margin: 10px 0;
+}
+
+.popup-actions {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #334155;
+}
+
+.popup-actions a {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.popup-actions a:hover {
+  opacity: 0.85;
+}
+
+/* Sparkline canvas */
+.sparkline-canvas {
+  width: 100%;
+  height: 40px;
+  display: block;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 600px) {
+  #app {
+    flex-direction: column-reverse;
+  }
+  #sidebar {
+    width: 100%;
+    min-width: 0;
+    border-right: none;
+    border-top: 1px solid var(--sidebar-border);
+    max-height: 40vh;
+  }
+  #map {
+    flex: 1;
+  }
+}

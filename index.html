@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greater Manchester Property Price Heatmap</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div id="sidebar-header">
+        <h1>GM Property Prices</h1>
+        <p class="subtitle">Median sale prices by postcode district</p>
+      </div>
+
+      <section class="control-group">
+        <label for="budget-input">Your budget</label>
+        <div class="budget-row">
+          <span class="pound">£</span>
+          <input
+            type="number"
+            id="budget-input"
+            min="50000"
+            max="2000000"
+            step="5000"
+            value="300000"
+          />
+        </div>
+        <input
+          type="range"
+          id="budget-slider"
+          min="50000"
+          max="2000000"
+          step="5000"
+          value="300000"
+        />
+        <div class="budget-labels">
+          <span>£50k</span>
+          <span>£2m</span>
+        </div>
+      </section>
+
+      <section class="control-group">
+        <label>Property type</label>
+        <div id="prop-type-toggle" role="group" aria-label="Property type">
+          <button class="type-btn active" data-type="all">All</button>
+          <button class="type-btn" data-type="D">Detached</button>
+          <button class="type-btn" data-type="S">Semi</button>
+          <button class="type-btn" data-type="T">Terraced</button>
+          <button class="type-btn" data-type="F">Flat</button>
+        </div>
+      </section>
+
+      <section class="legend">
+        <div class="legend-item"><span class="swatch green"></span> ≤ 95% of budget</div>
+        <div class="legend-item"><span class="swatch amber"></span> 95–115%</div>
+        <div class="legend-item"><span class="swatch red"></span> &gt; 115%</div>
+        <div class="legend-item"><span class="swatch grey"></span> Insufficient data</div>
+      </section>
+
+      <section class="control-group">
+        <button id="fit-affordable" class="action-btn">Show affordable areas</button>
+      </section>
+
+      <section id="mortgage-calc" class="control-group">
+        <label>Mortgage calculator</label>
+        <div class="mortgage-row">
+          <label for="deposit">Deposit (£)</label>
+          <input type="number" id="deposit" min="0" step="5000" value="50000" />
+        </div>
+        <div class="mortgage-row">
+          <label for="term">Term (years)</label>
+          <input type="number" id="term" min="5" max="40" value="25" />
+        </div>
+        <div class="mortgage-row">
+          <label for="rate">Rate (%)</label>
+          <input type="number" id="rate" min="0.1" max="15" step="0.1" value="4.5" />
+        </div>
+        <div id="mortgage-result"></div>
+      </section>
+
+      <footer id="sidebar-footer">
+        <p>Data: Land Registry PPD 2022–2024</p>
+        <p>Boundaries: ONS Open Geography</p>
+      </footer>
+    </aside>
+
+    <div id="map"></div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
